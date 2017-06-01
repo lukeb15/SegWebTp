@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="HacForo" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="HacForoContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UserSet" EntityType="HacForo.User" />
+    <EntitySet Name="ForumThreadSet" EntityType="HacForo.ForumThread" />
+    <EntitySet Name="CommentSet" EntityType="HacForo.Comment" />
+    <AssociationSet Name="UserThread" Association="HacForo.UserThread">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Thread" EntitySet="ForumThreadSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserComment" Association="HacForo.UserComment">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="ThreadComment" Association="HacForo.ThreadComment">
+      <End Role="Thread" EntitySet="ForumThreadSet" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="150" />
+    <Property Name="Email" Type="String" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="150" />
+    <Property Name="PasswordSalt" Type="String" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Threads" Relationship="HacForo.UserThread" FromRole="User" ToRole="Thread" />
+    <NavigationProperty Name="Comments" Relationship="HacForo.UserComment" FromRole="User" ToRole="Comment" />
+  </EntityType>
+  <EntityType Name="ForumThread">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="150" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="HacForo.UserThread" FromRole="Thread" ToRole="User" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Comments" Relationship="HacForo.ThreadComment" FromRole="Thread" ToRole="Comment" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Message" Type="String" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="HacForo.UserComment" FromRole="Comment" ToRole="User" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Thread" Relationship="HacForo.ThreadComment" FromRole="Comment" ToRole="Thread" />
+    <Property Name="ThreadId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="UserThread">
+    <End Type="HacForo.User" Role="User" Multiplicity="1" />
+    <End Type="HacForo.ForumThread" Role="Thread" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Thread">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserComment">
+    <End Type="HacForo.User" Role="User" Multiplicity="1" />
+    <End Type="HacForo.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ThreadComment">
+    <End Type="HacForo.ForumThread" Role="Thread" Multiplicity="1" />
+    <End Type="HacForo.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Thread">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="ThreadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
