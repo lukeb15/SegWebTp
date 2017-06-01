@@ -7,7 +7,7 @@ namespace HacForo.Models.DTOs
 {
     public class UserDTO
     {
-        public int Id { get; internal set; }
-        public string UserName { get; internal set; }
+        public int Id { get; set; }
+        public string UserName { get; set; }
     }
 }

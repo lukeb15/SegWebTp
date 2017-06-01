@@ -1,28 +1,27 @@
 ﻿@model HacForo.Models.DTOs.ThreadDTO
-
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Create</h2>
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Thread", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>New Thread</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+    @Html.ValidationSummary(true, "Registeration Failed, fields.");
+    <div>
+        <fieldset>
+            <legend>Register Form</legend>
+            <div class="editor-label">Title</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(t => t.Title)
             </div>
-        </div>
+            <div class="editor-label">Description</div>
+            <div class="editor-field">
+                @Html.TextAreaFor(t => t.Description)
+            </div>
+            <input type="submit" value="Create" class="btn btn-default" />
+        </fieldset>
     </div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

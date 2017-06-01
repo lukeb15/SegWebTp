@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HacForo.Models;
 using HacForo.Models.DTOs;
 using HacForo.Mappers;
+using System;
 
 namespace HacForo.Controllers
 {
@@ -22,9 +19,10 @@ namespace HacForo.Controllers
             Mapper = new ThreadMapper();
         }
         // GET: ThreadDTO
+        [HttpGet]
         public ActionResult Index()
         {
-            return View(db.ForumThreadSet
+            return View(db.ForumThreadSet.ToList()
                         .Select(t => Mapper.MapTo(t))
                         .ToList());
         }
@@ -45,28 +43,34 @@ namespace HacForo.Controllers
         }
 
         // GET: ThreadDTO/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: ThreadDTO/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CreationDate,Title")] ThreadDTO threadDTO)
+        public ActionResult Create(ThreadDTO thread)
         {
-            if (ModelState.IsValid)
+            if (thread.User != null)
             {
-                db.ForumThreadSet.Add(Mapper.MapTo(threadDTO));
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    //TODO: pass the user id and set it there
+                    thread.User = new UserDTO { Id = db.UserSet.First().Id };
 
-                return RedirectToAction("Index");
+                    db.ForumThreadSet.Add(Mapper.MapTo(thread));
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(thread);
             }
-
-            return View(threadDTO);
-        }  
+            else
+                throw new UnauthorizedAccessException("You should be logged to create threads");
+        }
 
         protected override void Dispose(bool disposing)
         {

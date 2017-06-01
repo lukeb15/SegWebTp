@@ -1,4 +1,6 @@
-﻿using HacForo.Models;
+﻿using HacForo.Mappers;
+using HacForo.Models;
+using HacForo.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -11,6 +13,13 @@ namespace HacForo.Controllers
 {
     public class UserController : Controller
     {
+        private IMapper<User, RegistrationDTO> RegistrationMap { set; get; }
+
+        public UserController()
+        {
+            RegistrationMap = new RegistrationMapper();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -46,25 +55,15 @@ namespace HacForo.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public ActionResult Register(RegistrationDTO registrationDTO)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     using (var db = new Models.HacForoContainer())
-                    {
-                        var crypto = new SimpleCrypto.PBKDF2();
-                        var encrypPass = crypto.Compute(user.Password);
-                        var newUser = db.UserSet.Create();
-                        newUser.Email = user.Email;
-                        newUser.Password = encrypPass;
-                        newUser.PasswordSalt = crypto.Salt;
-                        newUser.FirstName = user.FirstName;
-                        newUser.LastName = user.LastName;
-                        newUser.UserName = user.UserName;
-                        newUser.CreationDate = DateTime.Now;
-                        db.UserSet.Add(newUser);
+                    {                   
+                        db.UserSet.Add(RegistrationMap.MapTo(registrationDTO));
                         db.SaveChanges();
                         return RedirectToAction("Index", "Home");
                     }

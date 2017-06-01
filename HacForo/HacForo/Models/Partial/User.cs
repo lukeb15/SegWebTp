@@ -13,7 +13,6 @@ namespace HacForo.Models
 
     public class UserMetaData
     {
-        [Required]
         public int Id { get; set; }
 
         [Required]

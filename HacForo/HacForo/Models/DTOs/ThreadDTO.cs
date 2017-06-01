@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HacForo.Models.DTOs
 {
     public class ThreadDTO
     {
-        public string CreationDate { get; internal set; }
-        public int Id { get; internal set; }
-        public string Title { get; internal set; }
-        public string Description { get; internal set; }
-        public UserDTO User { get; internal set; }
+        public string CreationDate { get; set; }
+        public int Id { get; set; }        
+        public string Title { get; set; }
+        [AllowHtml]
+        public string Description { get; set; }
+        public UserDTO User { get; set; }
     }
 }

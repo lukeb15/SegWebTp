@@ -26,7 +26,7 @@ namespace HacForo.Controllers
             {
                 var threads = db.ForumThreadSet.ToList();
 
-                ViewBag.Threads = threads
+                ViewBag.Threads = threads.ToList()
                                     .Select(ft => Mapper.MapTo(ft))
                                     .ToList();
             }
