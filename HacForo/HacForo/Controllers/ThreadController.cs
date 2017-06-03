@@ -52,13 +52,13 @@ namespace HacForo.Controllers
         [HttpPost]
         public ActionResult Edit(ThreadDTO thread)
         {
-            if(!ValidateThread(thread.Id))
+            if (!ValidateThread(thread.Id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }            
+            }
 
             var threadDb = db.ForumThreadSet.Find(thread.Id);
-            
+
             if (threadDb == null)
             {
                 return HttpNotFound();
@@ -67,7 +67,7 @@ namespace HacForo.Controllers
             thread.UpdateModel(threadDb);
             db.SaveChanges();
 
-            return View(thread);
+            return View("Details", thread);
         }
 
         [HttpGet]
@@ -97,7 +97,13 @@ namespace HacForo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var threadDb = new ForumThread { Id = id.Value };
+            ForumThread threadDb = db.ForumThreadSet.Find(id.Value);
+
+            if (threadDb != null)
+                db.ForumThreadSet.Attach(threadDb);
+            else
+                threadDb = new ForumThread { Id = id.Value };
+
             db.Entry(threadDb).State = EntityState.Deleted;
             db.SaveChanges();
 
@@ -118,7 +124,7 @@ namespace HacForo.Controllers
                 FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-                UserDTO cookieUser = serializer.Deserialize<UserDTO>(authTicket.UserData);                
+                UserDTO cookieUser = serializer.Deserialize<UserDTO>(authTicket.UserData);
 
                 if (cookieUser != null)
                 {
@@ -151,7 +157,7 @@ namespace HacForo.Controllers
                 FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-                UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);                
+                UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);
 
                 if (serializeModel != null)
                 {
@@ -161,11 +167,11 @@ namespace HacForo.Controllers
                         db.ForumThreadSet.Add(Mapper.MapTo(thread));
                         db.SaveChanges();
 
-                        return RedirectToAction("Index","Home");
+                        return RedirectToAction("Index", "Home");
                     }
 
                     return View(thread);
-                }                    
+                }
             }
             throw new UnauthorizedAccessException("You must be logged to create threads");
         }
