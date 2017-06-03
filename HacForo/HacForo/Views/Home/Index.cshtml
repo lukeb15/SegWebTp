@@ -4,8 +4,10 @@
 }
 
 <div>
-    @Html.ActionLink("Create a Thread", "Create", "Thread", null, new { @class = "btn btn-info" })
-
+@if (Request.IsAuthenticated)
+{    
+     @Html.ActionLink("Create a Thread", "Create", "Thread", null, new { @class = "btn btn-info" })
+}
     <table id="theads" class="table">
         <thead>
             <tr>

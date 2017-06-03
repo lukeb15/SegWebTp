@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using System.Web.Script.Serialization;
+using System.Data.Entity;
 
 namespace HacForo.Controllers
 {
@@ -22,6 +23,7 @@ namespace HacForo.Controllers
         {
             Mapper = new ThreadMapper();
         }
+
         // GET: ThreadDTO
         [HttpGet]
         public ActionResult Index()
@@ -44,6 +46,91 @@ namespace HacForo.Controllers
                 return HttpNotFound();
             }
             return View(threadDTO);
+        }
+
+        // POST: ThreadDTO/Edit/5
+        [HttpPost]
+        public ActionResult Edit(ThreadDTO thread)
+        {
+            if(!ValidateThread(thread.Id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }            
+
+            var threadDb = db.ForumThreadSet.Find(thread.Id);
+            
+            if (threadDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            thread.UpdateModel(threadDb);
+            db.SaveChanges();
+
+            return View(thread);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (!(id.HasValue && ValidateThread(id.Value)))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var threadDb = db.ForumThreadSet.Find(id);
+
+            if (threadDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(Mapper.MapTo(threadDb));
+        }
+
+        // GET: ThreadDTO/Create
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (!(id.HasValue && ValidateThread(id.Value)))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var threadDb = new ForumThread { Id = id.Value };
+            db.Entry(threadDb).State = EntityState.Deleted;
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public bool ValidateThread(int threadId)
+        {
+            if (threadId == 0)
+            {
+                return false;
+            }
+
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                UserDTO cookieUser = serializer.Deserialize<UserDTO>(authTicket.UserData);                
+
+                if (cookieUser != null)
+                {
+                    var threadDb = db.ForumThreadSet.Find(threadId);
+                    if (cookieUser.Id == threadDb.UserId)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         // GET: ThreadDTO/Create
@@ -74,13 +161,13 @@ namespace HacForo.Controllers
                         db.ForumThreadSet.Add(Mapper.MapTo(thread));
                         db.SaveChanges();
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Home");
                     }
 
                     return View(thread);
                 }                    
             }
-            throw new UnauthorizedAccessException("You should be logged to create threads");
+            throw new UnauthorizedAccessException("You must be logged to create threads");
         }
 
         protected override void Dispose(bool disposing)

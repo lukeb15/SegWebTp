@@ -15,5 +15,17 @@ namespace HacForo.Models.DTOs
         public string Description { get; set; }
         public UserDTO User { get; set; }
         public string ImageLink { get; set; }
+
+        public bool ValidateUser(int userId)
+        {
+            return User.Id == userId;
+        }
+
+        internal void UpdateModel(ForumThread threadDb)
+        {
+            threadDb.Description = Description;
+            threadDb.ImageLink = ImageLink;
+            threadDb.Title = Title;
+        }
     }
 }

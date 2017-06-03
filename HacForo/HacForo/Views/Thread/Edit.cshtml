@@ -6,25 +6,30 @@
 }
 
 <h2>Edit</h2>
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Thread", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ThreadDTO</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+    @Html.ValidationSummary(true, "Registeration Failed, fields.");
+    <div>
+        <fieldset>
+            <legend>New Thread</legend>
+            <div class="editor-label">Title</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(t => t.Title)
             </div>
-        </div>
+            <div class="editor-label">Picture</div>
+            <div class="editor-field">
+                @Html.TextAreaFor(t => t.ImageLink)
+            </div>
+            <div class="editor-label">Description</div>
+            <div class="editor-field">
+                @Html.TextAreaFor(t => t.Description)
+            </div>
+            <input type="submit" name="Edit" value="Update" class="btn btn-default" />   
+            @Html.ActionLink("Delete", "Delete", "Thread", new { id = Model.Id }, new { @class = "btn btn-warning", onclick = "return confirm('Are you sure?'"})
+        </fieldset>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", "Home", null, null)
 </div>

@@ -372,10 +372,8 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\LogOut.cshtml" />
     <Content Include="Views\Thread\Create.cshtml" />
-    <Content Include="Views\Thread\Delete.cshtml" />
     <Content Include="Views\Thread\Details.cshtml" />
     <Content Include="Views\Thread\Edit.cshtml" />
-    <Content Include="Views\Thread\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

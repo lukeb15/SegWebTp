@@ -40,6 +40,6 @@ namespace HacForo.Common
             }
 
             throw new UnauthorizedAccessException("The login data is invalid");
-        }    
+        }
     }
 }

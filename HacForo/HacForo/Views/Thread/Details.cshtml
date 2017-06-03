@@ -38,6 +38,10 @@
 @Html.Raw(Model.Description)
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+@if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.User.Id)
+{
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    <span>|</span>
+}
     @Html.ActionLink("Back to List","Index", "Home", null, null)
 </p>

@@ -46,7 +46,6 @@ namespace HacForo.Mappers
                 modelDb.Title = dto.Title;
                 modelDb.Description = dto.Description;
                 modelDb.UserId = dto.User.Id;
-                modelDb.User = UserMap.MapTo(dto.User);
                 modelDb.CreationDate = DateTime.Now;
                 modelDb.ImageLink = dto.ImageLink;
             }
