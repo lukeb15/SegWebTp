@@ -90,6 +90,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -238,6 +239,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Common\MyPrincipal.cs" />
+    <Compile Include="Common\SessionManager.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ThreadController.cs" />
@@ -255,6 +258,7 @@
     <Compile Include="Models\Comment.cs">
       <DependentUpon>HacForo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\LoginDTO.cs" />
     <Compile Include="Models\DTOs\RegistrationDTO.cs" />
     <Compile Include="Models\DTOs\ThreadDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />

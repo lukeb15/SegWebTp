@@ -12,6 +12,7 @@
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
           <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="ProfilePictureLink" ColumnName="ProfilePictureLink" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -23,6 +24,8 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

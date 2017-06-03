@@ -1,5 +1,4 @@
-﻿using HacForo.Common;
-using HacForo.Mappers;
+﻿using HacForo.Mappers;
 using HacForo.Models;
 using HacForo.Models.DTOs;
 using System;
@@ -36,32 +35,42 @@ namespace HacForo.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn(LoginDTO loginDTO)
+        public ActionResult LogIn(LoginDTO loginDTO, HttpResponseBase response)
         {
-            try
+            if (IsValid(loginDTO.Email, loginDTO.Password))
             {
-                if (ModelState.IsValid)
+                using (var db = new Models.HacForoContainer())
                 {
-                    User user = SessionManager.AuthenticateUser(loginDTO.Email, loginDTO.Password);
+                    User userData = db.UserSet.Where(u => u.Email == loginDTO.Email).Single();
 
-                    using (var db = new Models.HacForoContainer())
-                    {
-                        string userJson = new JavaScriptSerializer().Serialize(UserMap.MapTo(user));
-                        string encTicket = SessionManager.GetAuthTicket(user.UserName, userJson);                        
+                    string encTicket = GetAuthTicket(loginDTO, userData);
 
-                        HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
-                        Response.Cookies.Add(faCookie);
-                    }
-
-                    return RedirectToAction("Index", "Home");
+                    response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+                    response.Cookies.Add(new HttpCookie("UserData", userJson));
                 }
+
+                return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+            else
             {
                 ModelState.AddModelError("", "Login details are wrong.");
             }
 
             return View();
+        }
+
+        private static string GetAuthTicket(LoginDTO loginDTO, User userData)
+        {
+            FormsAuthenticationTicket authTicket = new
+                 FormsAuthenticationTicket(1, //version
+                 loginDTO.Email, // user name
+                 DateTime.Now,             //creation
+                 DateTime.Now.AddMinutes(30), //Expiration (you can set it to 1 month
+                 true,  //Persistent
+                 userData.Id.ToString()); // additional informations
+
+            string encTicket = FormsAuthentication.Encrypt(authTicket);
+            return encTicket;
         }
 
         [HttpGet]
@@ -78,13 +87,10 @@ namespace HacForo.Controllers
                 if (ModelState.IsValid)
                 {
                     using (var db = new Models.HacForoContainer())
-                    {
-                        if (registrationDTO.IsValid(db, ModelState))
-                        {
-                            db.UserSet.Add(RegistrationMap.MapTo(registrationDTO));
-                            db.SaveChanges();
-                            return RedirectToAction("Index", "Home");
-                        }
+                    {                   
+                        db.UserSet.Add(RegistrationMap.MapTo(registrationDTO));
+                        db.SaveChanges();
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -109,18 +115,37 @@ namespace HacForo.Controllers
             return View();
         }
 
-        public ActionResult LogOut()
+        public ActionResult LogOut(HttpSessionStateBase session, HttpResponseBase response)
         {
             // Delete the user details from cache.
-            Session.Abandon();
+            session.Abandon();
             // Delete the authentication ticket and sign out.
             FormsAuthentication.SignOut();
             // Clear authentication cookie.
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie.Expires = DateTime.Now.AddYears(-1);
-            HttpContext.Response.Cookies.Add(cookie);
+            response.Cookies.Add(cookie);
 
             return RedirectToAction("Index", "Home");
-        }       
+        }
+
+        private bool IsValid(string email, string password)
+        {
+            var crypto = new SimpleCrypto.PBKDF2();
+            bool IsValid = false;
+
+            using (var db = new Models.HacForoContainer())
+            {
+                var user = db.UserSet.FirstOrDefault(u => u.Email == email);
+                if (user != null)
+                {
+                    if (user.Password == crypto.Compute(password, user.PasswordSalt))
+                    {
+                        IsValid = true;
+                    }
+                }
+            }
+            return IsValid;
+        }
     }
 }

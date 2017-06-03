@@ -88,7 +88,6 @@ c:\users\lucas\documents\visual studio 2015\Projects\HacForo\HacForo\bin\Microso
 c:\users\lucas\documents\visual studio 2015\Projects\HacForo\HacForo\bin\System.Web.Http.Owin.xml
 c:\users\lucas\documents\visual studio 2015\Projects\HacForo\HacForo\obj\Debug\HacForo.dll
 c:\users\lucas\documents\visual studio 2015\Projects\HacForo\HacForo\obj\Debug\HacForo.pdb
-C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.csprojResolveAssemblyReference.cache
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.dll
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.pdb
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\ApplicationInsights.config

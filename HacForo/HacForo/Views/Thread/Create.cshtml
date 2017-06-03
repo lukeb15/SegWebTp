@@ -9,10 +9,14 @@
     @Html.ValidationSummary(true, "Registeration Failed, fields.");
     <div>
         <fieldset>
-            <legend>Register Form</legend>
+            <legend>New Thread</legend>
             <div class="editor-label">Title</div>
             <div class="editor-field">
                 @Html.TextBoxFor(t => t.Title)
+            </div>
+            <div class="editor-label">Picture</div>
+            <div class="editor-field">
+                @Html.TextAreaFor(t => t.ImageLink)
             </div>
             <div class="editor-label">Description</div>
             <div class="editor-field">
@@ -22,6 +26,4 @@
         </fieldset>
     </div>
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

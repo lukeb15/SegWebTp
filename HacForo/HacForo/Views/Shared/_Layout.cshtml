@@ -7,12 +7,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div style="width:auto; background-color:aqua">
-        @RenderBody()
+<body style="padding:25px;">
+    <div style="width:auto;" class="text-right">        
         @if (Request.IsAuthenticated)
         {
-            <strong>@Html.Encode(User.Identity.Name)</strong>
+            <strong>@Html.Encode((User as HacForo.Common.MyPrincipal).User.UserName)</strong>
             @Html.ActionLink("Log Out", "Logout", "User")
         }
         else
@@ -23,7 +22,7 @@
         }
     </div>
 
-    
+    @RenderBody()    
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

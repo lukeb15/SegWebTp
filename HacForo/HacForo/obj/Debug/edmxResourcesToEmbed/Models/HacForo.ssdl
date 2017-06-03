@@ -29,6 +29,7 @@
     <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="150" />
     <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreationDate" Type="datetime" Nullable="false" />
+    <Property Name="ProfilePictureLink" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="ForumThreadSet">
     <Key>
@@ -39,6 +40,8 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreationDate" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ImageLink" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Points" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CommentSet">
     <Key>

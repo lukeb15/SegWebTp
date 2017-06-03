@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HacForo.Models.DTOs
 {
@@ -33,5 +34,26 @@ namespace HacForo.Models.DTOs
         [Required]
         [Display(Name = "Last Name: ")]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Profile Picture Link: ")]
+        public string ProfilePictureLink { get; set; }
+
+        public bool IsValid(HacForoContainer db, ModelStateDictionary modelState)
+        {
+            bool isValid = true;
+            if (db.UserSet.Where(u => u.Email == Email).Count() != 0)
+            {
+                modelState.AddModelError("Email", "There is already a User with that Email");
+                isValid = false;
+            }
+            if (db.UserSet.Where(u => u.UserName == UserName).Count() != 0)
+            {
+                modelState.AddModelError("UserName", "There is already a User with that User Name");
+                isValid = false;
+            }
+
+            return isValid;
+        }
     }
 }

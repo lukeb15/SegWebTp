@@ -31,6 +31,7 @@
     <Property Name="CreationDate" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="Threads" Relationship="HacForo.UserThread" FromRole="User" ToRole="Thread" />
     <NavigationProperty Name="Comments" Relationship="HacForo.UserComment" FromRole="User" ToRole="Comment" />
+    <Property Name="ProfilePictureLink" Type="String" Nullable="false" />
   </EntityType>
   <EntityType Name="ForumThread">
     <Key>
@@ -43,6 +44,8 @@
     <NavigationProperty Name="User" Relationship="HacForo.UserThread" FromRole="Thread" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Comments" Relationship="HacForo.ThreadComment" FromRole="Thread" ToRole="Comment" />
+    <Property Name="ImageLink" Type="String" Nullable="false" />
+    <Property Name="Points" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Comment">
     <Key>

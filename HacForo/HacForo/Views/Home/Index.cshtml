@@ -3,32 +3,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div>
-    @Html.ActionLink("Create a Thread", "Create", "ThreadController")
-   
-    <table id="theads">
+    @Html.ActionLink("Create a Thread", "Create", "Thread", null, new { @class = "btn btn-info" })
+
+    <table id="theads" class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>Title</th>
+                <th>Started by</th>
+                <th>Created on</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in ViewBag.Threads)
             {
                 <tr>
+                    <td><span class="glyphicon glyphicon-question-sign"></span></td>
                     <td>
-                        <div class="inner">
-                            <h3 class="threadtitle">
-                                <img src="" alt="Question" border="0" title="Question">
-                                <a class="title" href="">@item.Title</a>
-                            </h3>
-                            <div class="threadmeta">
-                                <div class="author">
-                                    <span class="label">Started by&nbsp;@item.User.UserName,&nbsp; @item.CreationDate</span>
-                                </div>
-                            </div>
-                        </div>
+                        @Html.ActionLink((string)@item.Title, "Details", "Thread", new { id = item.Id }, null)
+                    </td>
+                    <td>
+                        @item.User.UserName
+                    </td>
+                    <td>
+                        @item.CreationDate
                     </td>
                 </tr>
             }

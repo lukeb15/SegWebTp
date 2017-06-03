@@ -36,6 +36,11 @@
                 @Html.TextBoxFor(u => u.LastName)
                 @Html.ValidationMessageFor(u => u.LastName)
             </div>
+            <div class="editor-label">@Html.LabelFor(u => u.ProfilePictureLink)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(u => u.ProfilePictureLink)
+                @Html.ValidationMessageFor(u => u.ProfilePictureLink)
+            </div>
 
             <input type="submit" value="Register" />
         </fieldset>

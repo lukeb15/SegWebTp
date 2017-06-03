@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/31/2017 23:48:57
--- Generated from EDMX file: C:\Users\Lucas\documents\visual studio 2015\Projects\HacForo\HacForo\Models\HacForo.edmx
+-- Date Created: 06/02/2017 22:15:25
+-- Generated from EDMX file: C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\Models\HacForo.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -54,7 +54,8 @@ CREATE TABLE [dbo].[UserSet] (
     [LastName] nvarchar(max)  NOT NULL,
     [UserName] nvarchar(150)  NOT NULL,
     [PasswordSalt] nvarchar(max)  NOT NULL,
-    [CreationDate] datetime  NOT NULL
+    [CreationDate] datetime  NOT NULL,
+    [ProfilePictureLink] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -64,7 +65,9 @@ CREATE TABLE [dbo].[ForumThreadSet] (
     [Title] nvarchar(150)  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [CreationDate] datetime  NOT NULL,
-    [UserId] int  NOT NULL
+    [UserId] int  NOT NULL,
+    [ImageLink] nvarchar(max)  NOT NULL,
+    [Points] int  NOT NULL
 );
 GO
 

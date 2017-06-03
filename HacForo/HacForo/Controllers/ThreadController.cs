@@ -6,6 +6,10 @@ using HacForo.Models;
 using HacForo.Models.DTOs;
 using HacForo.Mappers;
 using System;
+using System.Web;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using System.Web.Script.Serialization;
 
 namespace HacForo.Controllers
 {
@@ -53,23 +57,30 @@ namespace HacForo.Controllers
         [HttpPost]
         public ActionResult Create(ThreadDTO thread)
         {
-            if (thread.User != null)
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie != null)
             {
-                if (ModelState.IsValid)
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);                
+
+                if (serializeModel != null)
                 {
-                    //TODO: pass the user id and set it there
-                    thread.User = new UserDTO { Id = db.UserSet.First().Id };
+                    if (ModelState.IsValid)
+                    {
+                        thread.User = serializeModel;
+                        db.ForumThreadSet.Add(Mapper.MapTo(thread));
+                        db.SaveChanges();
 
-                    db.ForumThreadSet.Add(Mapper.MapTo(thread));
-                    db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
 
-                    return RedirectToAction("Index");
-                }
-
-                return View(thread);
+                    return View(thread);
+                }                    
             }
-            else
-                throw new UnauthorizedAccessException("You should be logged to create threads");
+            throw new UnauthorizedAccessException("You should be logged to create threads");
         }
 
         protected override void Dispose(bool disposing)

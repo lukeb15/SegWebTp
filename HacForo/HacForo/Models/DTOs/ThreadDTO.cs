@@ -14,5 +14,6 @@ namespace HacForo.Models.DTOs
         [AllowHtml]
         public string Description { get; set; }
         public UserDTO User { get; set; }
+        public string ImageLink { get; set; }
     }
 }

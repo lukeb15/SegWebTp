@@ -24,6 +24,8 @@ namespace HacForo.Mappers
             dto.Title = dbModel.Title;
             dto.CreationDate = dbModel.CreationDate.ToLongTimeString();
             dto.User = UserMap.MapTo(dbModel.User);
+            dto.Description = dbModel.Description;
+            dto.ImageLink = dbModel.ImageLink;
 
             return dto;
         }
@@ -46,6 +48,7 @@ namespace HacForo.Mappers
                 modelDb.UserId = dto.User.Id;
                 modelDb.User = UserMap.MapTo(dto.User);
                 modelDb.CreationDate = DateTime.Now;
+                modelDb.ImageLink = dto.ImageLink;
             }
 
             return modelDb;

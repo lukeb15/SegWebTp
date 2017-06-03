@@ -28,6 +28,7 @@ namespace HacForo.Mappers
                 dbModel.LastName = dto.LastName;
                 dbModel.UserName = dto.UserName;
                 dbModel.CreationDate = DateTime.Now;
+                dbModel.ProfilePictureLink = dto.ProfilePictureLink;
 
                 return dbModel;
             }
