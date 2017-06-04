@@ -67,7 +67,7 @@ namespace HacForo.Controllers
             thread.UpdateModel(threadDb);
             db.SaveChanges();
 
-            return View("Details", thread);
+            return View("Details", Mapper.MapTo(threadDb));
         }
 
         [HttpGet]

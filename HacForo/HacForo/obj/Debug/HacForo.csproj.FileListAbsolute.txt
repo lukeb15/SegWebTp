@@ -178,3 +178,4 @@ C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\Microsoft.Owin.Security
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\System.Web.Http.Owin.xml
+C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.csprojResolveAssemblyReference.cache
