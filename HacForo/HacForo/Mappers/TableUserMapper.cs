@@ -7,28 +7,24 @@ using System.Web;
 
 namespace HacForo.Mappers
 {
-    public class UserMapper : IMapper<User, UserDTO>
+    public class TableUserMapper : IMapper<User, TableUserDTO>
     {
-        private IMapper<ForumThread, TableThreadDTO> ThreadMap { set; get; }
-        public UserMapper()
-        {
-            ThreadMap = new TableThreadMapper();
+        public TableUserMapper()
+        {        
         }
 
-        public UserDTO MapTo(User dbModel)
+       
+        public TableUserDTO MapTo(User dbModel)
         {
-            UserDTO dto = new UserDTO();
+            TableUserDTO dto = new TableUserDTO();
             dto.Id = dbModel.Id;
             dto.UserName = dbModel.UserName;
-            dto.Email = dbModel.Email;
             dto.ProfilePictureLink = dbModel.ProfilePictureLink;
-            dto.Threads = dbModel.Threads.ToList()
-                            .Select(t => ThreadMap.MapTo(t)).ToList();
-
+           
             return dto;
         }
 
-        public User MapTo(UserDTO dto)
+        public User MapTo(TableUserDTO dto)
         {
             using (var db = new Models.HacForoContainer())
             {

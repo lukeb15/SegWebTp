@@ -18,12 +18,9 @@ namespace HacForo.Mappers
         {
             using (var db = new Models.HacForoContainer())
             {
-                var crypto = new SimpleCrypto.PBKDF2();
-                var encrypPass = crypto.Compute(dto.Password);
                 var dbModel = db.UserSet.Create();
-                dbModel.Email = dto.Email;
-                dbModel.Password = encrypPass;
-                dbModel.PasswordSalt = crypto.Salt;
+                dbModel.SetPassword(dto.Password);
+                dbModel.Email = dto.Email;                
                 dbModel.FirstName = dto.FirstName;
                 dbModel.LastName = dto.LastName;
                 dbModel.UserName = dto.UserName;

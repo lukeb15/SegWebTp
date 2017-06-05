@@ -9,6 +9,14 @@ namespace HacForo.Models
     [MetadataType(typeof(UserMetaData))]
     public partial class User
     {
+        internal void SetPassword(string password)
+        {
+            var crypto = new SimpleCrypto.PBKDF2();
+            var encrypPass = crypto.Compute(password);
+            Password = encrypPass;
+            PasswordSalt = crypto.Salt;
+        }
+
     }
 
     public class UserMetaData

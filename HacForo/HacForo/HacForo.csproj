@@ -251,6 +251,8 @@
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\CommentMapper.cs" />
     <Compile Include="Mappers\RegistrationMapper.cs" />
+    <Compile Include="Mappers\TableThreadMapper.cs" />
+    <Compile Include="Mappers\TableUserMapper.cs" />
     <Compile Include="Mappers\UserMapper.cs" />
     <Compile Include="Mappers\ThreadMapper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -260,8 +262,11 @@
     </Compile>
     <Compile Include="Models\DTOs\LoginDTO.cs" />
     <Compile Include="Models\DTOs\RegistrationDTO.cs" />
+    <Compile Include="Models\DTOs\TableThreadDTO.cs" />
     <Compile Include="Models\DTOs\ThreadDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
+    <Compile Include="Models\DTOs\ChangePasswordDTO.cs" />
+    <Compile Include="Models\DTOs\TableUserDTO.cs" />
     <Compile Include="Models\DTOs\UserDTO.cs" />
     <Compile Include="Models\ForumThread.cs">
       <DependentUpon>HacForo.tt</DependentUpon>
@@ -374,6 +379,9 @@
     <Content Include="Views\Thread\Create.cshtml" />
     <Content Include="Views\Thread\Details.cshtml" />
     <Content Include="Views\Thread\Edit.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

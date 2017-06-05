@@ -15,3 +15,12 @@ select,
 textarea {
     max-width: 280px;
 }
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.listIcon{
+    max-width: 50px;
+    max-height: 50px;
+}

@@ -5,12 +5,10 @@ using System.Web;
 
 namespace HacForo.Models.DTOs
 {
-    public class UserDTO
+    public class TableUserDTO
     {
         public int Id { get; set; }
         public string UserName { get; set; }
-        public string Email { get; set; }
         public string ProfilePictureLink { get; set; }
-        public IList<TableThreadDTO> Threads { get; set; }
     }
 }

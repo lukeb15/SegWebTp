@@ -1,47 +1,46 @@
 ﻿@model HacForo.Models.DTOs.ThreadDTO
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Details</h2>
-
+<h2>@Html.DisplayFor(model => model.Title)</h2>
 <div>
-    <h4>ThreadDTO</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.UserName)
-        </dd>
-    </dl>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="col-sm-10">
+                    @Html.Raw(Model.Description)
+                </div>
+                <div class="col-sm-2">
+                    <img src="@Html.DisplayFor(model => model.ImageLink)" />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => Model.User.UserName)
+                    </dt>
+                    <dd>
+                        @Html.ActionLink((string)Model.User.UserName, "Details", "User", new { id = Model.User.Id }, null)                        
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CreationDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CreationDate)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>
-@Html.Raw(Model.Description)
-
+<br />
 <p>
-@if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.User.Id)
-{
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-    <span>|</span>
-}
-    @Html.ActionLink("Back to List","Index", "Home", null, null)
+    @if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.User.Id)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        <span>|</span>
+    }
+    @Html.ActionLink("Back to List", "Index", "Home", null, null)
 </p>

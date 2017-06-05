@@ -11,7 +11,7 @@
     <div style="width:auto;" class="text-right">        
         @if (Request.IsAuthenticated)
         {
-            <strong>@Html.Encode((User as HacForo.Common.MyPrincipal).User.UserName)</strong>
+            <strong>@Html.ActionLink((string)(User as HacForo.Common.MyPrincipal).User.UserName, "Details", "User", new { id = (User as HacForo.Common.MyPrincipal).User.Id }, null)</strong>
             @Html.ActionLink("Log Out", "Logout", "User")
         }
         else

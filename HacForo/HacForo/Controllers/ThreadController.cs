@@ -18,10 +18,12 @@ namespace HacForo.Controllers
     {
         private HacForoContainer db = new HacForoContainer();
         private IMapper<ForumThread, ThreadDTO> Mapper { set; get; }
+        private IMapper<ForumThread, TableThreadDTO> TableMapper { set; get; }
 
         public ThreadController()
         {
             Mapper = new ThreadMapper();
+            TableMapper = new TableThreadMapper();
         }
 
         // GET: ThreadDTO

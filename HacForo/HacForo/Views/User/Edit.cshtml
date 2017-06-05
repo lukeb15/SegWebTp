@@ -1,0 +1,34 @@
+﻿@model HacForo.Models.DTOs.UserDTO
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Html.DisplayTextFor(u => u.UserName)</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true, "Uptate Failed, fields.");
+    <div>
+        <fieldset>
+            <div class="editor-label">@Html.LabelFor(u => u.Email)</div>
+            <div>
+                @Html.DisplayTextFor(u => u.Email)
+            </div>
+            <div class="editor-label">@Html.LabelFor(u => u.UserName)</div>
+            <div>
+                @Html.DisplayTextFor(u => u.UserName)
+            </div>
+            <div class="editor-label">@Html.LabelFor(u => u.ProfilePictureLink)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(u => u.ProfilePictureLink)
+                @Html.ValidationMessageFor(u => u.ProfilePictureLink)
+            </div>
+            <input type="submit" name="Edit" value="Update" class="btn btn-default" />
+            @Html.ActionLink("Change Password", "ChangePassword", "User", null, new { @class = "btn btn-warning", onclick = "return confirm('Are you sure?'" })
+        </fieldset>
+
+    </div>
+    
+}
+
+

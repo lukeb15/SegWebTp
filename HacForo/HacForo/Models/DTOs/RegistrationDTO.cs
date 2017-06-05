@@ -55,5 +55,13 @@ namespace HacForo.Models.DTOs
 
             return isValid;
         }
+
+
+        internal void UpdateModel(User dbModel)
+        {
+            dbModel.FirstName = FirstName;
+            dbModel.LastName = LastName;
+            dbModel.ProfilePictureLink = ProfilePictureLink;
+        }
     }
 }

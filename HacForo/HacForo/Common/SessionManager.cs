@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Security;
 
 namespace HacForo.Common
@@ -37,6 +38,21 @@ namespace HacForo.Common
                         return user;
                     }
                 }
+            }
+
+            throw new UnauthorizedAccessException("The login data is invalid");
+        }
+
+        internal static UserDTO GetLoggedUser(HttpCookie authCookie)
+        {
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                UserDTO cookieUser = serializer.Deserialize<UserDTO>(authTicket.UserData);
+
+                return cookieUser;
             }
 
             throw new UnauthorizedAccessException("The login data is invalid");

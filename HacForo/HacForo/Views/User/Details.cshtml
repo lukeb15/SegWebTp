@@ -1,0 +1,56 @@
+﻿@model HacForo.Models.DTOs.UserDTO
+@{
+    ViewBag.Title = "User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Html.DisplayFor(model => model.UserName)</h2>
+<div>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <table id="theads" class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Title</th>
+                            <th>Started by</th>
+                            <th>Created on</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Threads)
+                        {
+                            <tr>
+                                <td>
+                                    <img class="listIcon" src="@item.ImageLink" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink((string)@item.Title, "Details", "Thread", new { id = item.Id }, null)
+                                </td>
+                                <td>
+                                    @Html.ActionLink((string)@item.User.UserName, "Details", "User", new { id = @item.User.Id }, null)
+                                </td>
+                                <td>
+                                    @item.CreationDate
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-4" style="text-align: center;">
+                <img src="@Html.DisplayFor(model => model.ProfilePictureLink)" />
+                <p>
+                    @if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.Id)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+

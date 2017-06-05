@@ -11,11 +11,11 @@ namespace HacForo.Controllers
 {
     public class HomeController : Controller
     {
-        private IMapper<ForumThread, ThreadDTO> Mapper { set; get; }
+        private IMapper<ForumThread, TableThreadDTO> Mapper { set; get; }
 
         public HomeController()
         {
-            Mapper = new ThreadMapper();
+            Mapper = new TableThreadMapper();
         }
 
         public ActionResult Index()
@@ -28,6 +28,7 @@ namespace HacForo.Controllers
 
                 ViewBag.Threads = threads.ToList()
                                     .Select(ft => Mapper.MapTo(ft))
+                                    .OrderByDescending(t => t.CreationDate)
                                     .ToList();
             }
                         
