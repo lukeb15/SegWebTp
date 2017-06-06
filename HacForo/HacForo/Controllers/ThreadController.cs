@@ -164,29 +164,38 @@ namespace HacForo.Controllers
         [HttpPost]
         public ActionResult Create(ThreadDTO thread)
         {
-            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-
-            if (authCookie != null)
+            try
             {
-                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 
-                UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);
-
-                if (serializeModel != null)
+                if (authCookie != null)
                 {
-                    if (ModelState.IsValid)
+                    FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                    UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);
+
+                    if (serializeModel != null)
                     {
-                        thread.User = serializeModel;
-                        db.ForumThreadSet.Add(Mapper.MapTo(thread));
-                        db.SaveChanges();
+                        if (ModelState.IsValid)
+                        {
+                            thread.User = serializeModel;
+                            db.ForumThreadSet.Add(Mapper.MapTo(thread));
+                            db.SaveChanges();
 
-                        return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home");
+                        }
+
+                        return View(thread);
                     }
-
-                    return View(thread);
                 }
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
             throw new UnauthorizedAccessException("You must be logged to create threads");
         }
 

@@ -18,7 +18,7 @@
             </div>
             <div class="editor-label">Picture</div>
             <div class="editor-field">
-                @Html.TextAreaFor(t => t.ImageLink)
+                @Html.TextBoxFor(t => t.ImageLink)
             </div>
             <div class="editor-label">Description</div>
             <div class="editor-field">
@@ -33,3 +33,23 @@
 <div>
     @Html.ActionLink("Back to List", "Index", "Home", null, null)
 </div>
+
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<!-- Script to wire up your TinyMCE editor -->
+<script type="text/javascript">
+        // Initialize your tinyMCE Editor with your preferred options
+    tinymce.init({
+        selector: 'textarea',
+        height: 500,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table contextmenu paste code'
+        ],
+        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        content_css: [
+          '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+          '//www.tinymce.com/css/codepen.min.css']
+    });
+</script>
