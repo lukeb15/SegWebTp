@@ -16,6 +16,15 @@
       <End Role="Thread" EntitySet="ForumThreadSet" />
       <End Role="Comment" EntitySet="CommentSet" />
     </AssociationSet>
+    <EntitySet Name="UserThreadPointsSet" EntityType="HacForo.UserThreadPoints" />
+    <AssociationSet Name="UserUserThreadPoints" Association="HacForo.UserUserThreadPoints">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="UserThreadPoints" EntitySet="UserThreadPointsSet" />
+    </AssociationSet>
+    <AssociationSet Name="ForumThreadUserThreadPoints" Association="HacForo.ForumThreadUserThreadPoints">
+      <End Role="ForumThread" EntitySet="ForumThreadSet" />
+      <End Role="UserThreadPoints" EntitySet="UserThreadPointsSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -32,6 +41,7 @@
     <NavigationProperty Name="Threads" Relationship="HacForo.UserThread" FromRole="User" ToRole="Thread" />
     <NavigationProperty Name="Comments" Relationship="HacForo.UserComment" FromRole="User" ToRole="Comment" />
     <Property Name="ProfilePictureLink" Type="String" Nullable="false" />
+    <NavigationProperty Name="UserThreadPoints" Relationship="HacForo.UserUserThreadPoints" FromRole="User" ToRole="UserThreadPoints" />
   </EntityType>
   <EntityType Name="ForumThread">
     <Key>
@@ -45,7 +55,7 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Comments" Relationship="HacForo.ThreadComment" FromRole="Thread" ToRole="Comment" />
     <Property Name="ImageLink" Type="String" Nullable="false" />
-    <Property Name="Points" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserThreadPoints" Relationship="HacForo.ForumThreadUserThreadPoints" FromRole="ForumThread" ToRole="UserThreadPoints" />
   </EntityType>
   <EntityType Name="Comment">
     <Key>
@@ -91,6 +101,41 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Comment">
+        <PropertyRef Name="ThreadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserThreadPoints">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Points" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ThreadId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="HacForo.UserUserThreadPoints" FromRole="UserThreadPoints" ToRole="User" />
+    <NavigationProperty Name="ForumThread" Relationship="HacForo.ForumThreadUserThreadPoints" FromRole="UserThreadPoints" ToRole="ForumThread" />
+  </EntityType>
+  <Association Name="UserUserThreadPoints">
+    <End Type="HacForo.User" Role="User" Multiplicity="1" />
+    <End Type="HacForo.UserThreadPoints" Role="UserThreadPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserThreadPoints">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ForumThreadUserThreadPoints">
+    <End Type="HacForo.ForumThread" Role="ForumThread" Multiplicity="1" />
+    <End Type="HacForo.UserThreadPoints" Role="UserThreadPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ForumThread">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserThreadPoints">
         <PropertyRef Name="ThreadId" />
       </Dependent>
     </ReferentialConstraint>

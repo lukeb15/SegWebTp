@@ -12,7 +12,6 @@ namespace HacForo.Mappers
         public TableUserMapper()
         {        
         }
-
        
         public TableUserDTO MapTo(User dbModel)
         {

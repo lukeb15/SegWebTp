@@ -5,12 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4dc3d95b324c42678f49e02532bcbf58" Name="Diagram1" ZoomLevel="82" >
-        <EntityTypeShape EntityType="HacForo.User" Width="1.5" PointX="5" PointY="0.875" />
-        <EntityTypeShape EntityType="HacForo.ForumThread" Width="1.5" PointX="5" PointY="4.875" />
-        <EntityTypeShape EntityType="HacForo.Comment" Width="1.5" PointX="1.5" PointY="2.625" />
+        <EntityTypeShape EntityType="HacForo.User" Width="1.5" PointX="0.75" PointY="3.125" />
+        <EntityTypeShape EntityType="HacForo.ForumThread" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="HacForo.Comment" Width="1.5" PointX="5.25" PointY="3.625" />
         <AssociationConnector Association="HacForo.UserThread" />
         <AssociationConnector Association="HacForo.UserComment" />
         <AssociationConnector Association="HacForo.ThreadComment" />
+        <EntityTypeShape EntityType="HacForo.UserThreadPoints" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="HacForo.UserUserThreadPoints" />
+        <AssociationConnector Association="HacForo.ForumThreadUserThreadPoints" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

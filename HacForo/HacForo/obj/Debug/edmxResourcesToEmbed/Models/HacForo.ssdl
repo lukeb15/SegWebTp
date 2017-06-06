@@ -4,6 +4,7 @@
     <EntitySet Name="UserSet" EntityType="HacForo.Store.UserSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ForumThreadSet" EntityType="HacForo.Store.ForumThreadSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CommentSet" EntityType="HacForo.Store.CommentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserThreadPointsSet" EntityType="HacForo.Store.UserThreadPointsSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserThread" Association="HacForo.Store.UserThread">
       <End Role="User" EntitySet="UserSet" />
       <End Role="Thread" EntitySet="ForumThreadSet" />
@@ -15,6 +16,14 @@
     <AssociationSet Name="ThreadComment" Association="HacForo.Store.ThreadComment">
       <End Role="Thread" EntitySet="ForumThreadSet" />
       <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserUserThreadPoints" Association="HacForo.Store.UserUserThreadPoints">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="UserThreadPoints" EntitySet="UserThreadPointsSet" />
+    </AssociationSet>
+    <AssociationSet Name="ForumThreadUserThreadPoints" Association="HacForo.Store.ForumThreadUserThreadPoints">
+      <End Role="ForumThread" EntitySet="ForumThreadSet" />
+      <End Role="UserThreadPoints" EntitySet="UserThreadPointsSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserSet">
@@ -41,7 +50,6 @@
     <Property Name="CreationDate" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="ImageLink" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Points" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CommentSet">
     <Key>
@@ -50,6 +58,15 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreationDate" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ThreadId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserThreadPointsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Points" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="ThreadId" Type="int" Nullable="false" />
   </EntityType>
@@ -85,6 +102,30 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Comment">
+        <PropertyRef Name="ThreadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserUserThreadPoints">
+    <End Role="User" Type="HacForo.Store.UserSet" Multiplicity="1" />
+    <End Role="UserThreadPoints" Type="HacForo.Store.UserThreadPointsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserThreadPoints">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ForumThreadUserThreadPoints">
+    <End Role="ForumThread" Type="HacForo.Store.ForumThreadSet" Multiplicity="1" />
+    <End Role="UserThreadPoints" Type="HacForo.Store.UserThreadPointsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ForumThread">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserThreadPoints">
         <PropertyRef Name="ThreadId" />
       </Dependent>
     </ReferentialConstraint>

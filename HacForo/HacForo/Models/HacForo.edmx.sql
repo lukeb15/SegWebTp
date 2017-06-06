@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/02/2017 22:15:25
+-- Date Created: 06/05/2017 22:34:33
 -- Generated from EDMX file: C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\Models\HacForo.edmx
 -- --------------------------------------------------
 
@@ -66,8 +66,7 @@ CREATE TABLE [dbo].[ForumThreadSet] (
     [Description] nvarchar(max)  NOT NULL,
     [CreationDate] datetime  NOT NULL,
     [UserId] int  NOT NULL,
-    [ImageLink] nvarchar(max)  NOT NULL,
-    [Points] int  NOT NULL
+    [ImageLink] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -76,6 +75,15 @@ CREATE TABLE [dbo].[CommentSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Message] nvarchar(max)  NOT NULL,
     [CreationDate] datetime  NOT NULL,
+    [UserId] int  NOT NULL,
+    [ThreadId] int  NOT NULL
+);
+GO
+
+-- Creating table 'UserThreadPointsSet'
+CREATE TABLE [dbo].[UserThreadPointsSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Points] int  NOT NULL,
     [UserId] int  NOT NULL,
     [ThreadId] int  NOT NULL
 );
@@ -100,6 +108,12 @@ GO
 -- Creating primary key on [Id] in table 'CommentSet'
 ALTER TABLE [dbo].[CommentSet]
 ADD CONSTRAINT [PK_CommentSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'UserThreadPointsSet'
+ALTER TABLE [dbo].[UserThreadPointsSet]
+ADD CONSTRAINT [PK_UserThreadPointsSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -149,6 +163,36 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_ThreadComment'
 CREATE INDEX [IX_FK_ThreadComment]
 ON [dbo].[CommentSet]
+    ([ThreadId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'UserThreadPointsSet'
+ALTER TABLE [dbo].[UserThreadPointsSet]
+ADD CONSTRAINT [FK_UserUserThreadPoints]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[UserSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserUserThreadPoints'
+CREATE INDEX [IX_FK_UserUserThreadPoints]
+ON [dbo].[UserThreadPointsSet]
+    ([UserId]);
+GO
+
+-- Creating foreign key on [ThreadId] in table 'UserThreadPointsSet'
+ALTER TABLE [dbo].[UserThreadPointsSet]
+ADD CONSTRAINT [FK_ForumThreadUserThreadPoints]
+    FOREIGN KEY ([ThreadId])
+    REFERENCES [dbo].[ForumThreadSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ForumThreadUserThreadPoints'
+CREATE INDEX [IX_FK_ForumThreadUserThreadPoints]
+ON [dbo].[UserThreadPointsSet]
     ([ThreadId]);
 GO
 

@@ -11,7 +11,7 @@ namespace HacForo.Mappers
     {
         public IMapper<User, UserDTO> UserMap { get; private set; }
 
-        public ThreadMapper()
+        public ThreadMapper() 
         {
             UserMap = new UserMapper();
         }        
@@ -26,6 +26,8 @@ namespace HacForo.Mappers
             dto.User = UserMap.MapTo(dbModel.User);
             dto.Description = dbModel.Description;
             dto.ImageLink = dbModel.ImageLink;
+            dto.Points = dbModel.UserThreadPoints.Sum(utp => utp.Points);
+            dto.UserCanPoint = false;
 
             return dto;
         }

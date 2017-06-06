@@ -11,6 +11,22 @@
             <div class="col-sm-8">
                 <div class="col-sm-10">
                     @Html.Raw(Model.Description)
+                    <hr />
+                    @if (Request.IsAuthenticated && Model.UserCanPoint)
+                    {
+                        <div>
+                            @Html.ActionLink("1", "Points", "Thread", new { points = 1, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("2", "Points", "Thread", new { points = 2, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("3", "Points", "Thread", new { points = 3, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("4", "Points", "Thread", new { points = 4, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("5", "Points", "Thread", new { points = 5, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("6", "Points", "Thread", new { points = 6, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("7", "Points", "Thread", new { points = 7, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("8", "Points", "Thread", new { points = 8, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("9", "Points", "Thread", new { points = 9, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("10", "Points", "Thread", new { points = 10, threadId = Model.Id }, new { @class = "btn btn-primary" })
+                        </div>
+                    }
                 </div>
                 <div class="col-sm-2">
                     <img src="@Html.DisplayFor(model => model.ImageLink)" />
@@ -29,6 +45,12 @@
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.CreationDate)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Points)
+                    </dt>
+                    <dd>
+                        <strong>@Html.DisplayFor(model => model.Points)</strong>
                     </dd>
                 </dl>
             </div>

@@ -25,7 +25,6 @@
           <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
-          <ScalarProperty Name="Points" ColumnName="Points" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -35,6 +34,16 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Message" ColumnName="Message" />
           <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserThreadPointsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HacForo.UserThreadPoints)">
+        <MappingFragment StoreEntitySet="UserThreadPointsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
         </MappingFragment>

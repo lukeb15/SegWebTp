@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using System.Data.Entity;
 
 namespace HacForo.Common
 {
@@ -30,7 +31,10 @@ namespace HacForo.Common
 
             using (var db = new Models.HacForoContainer())
             {
-                User user = db.UserSet.FirstOrDefault(u => u.Email == email);
+                
+                User user = db.UserSet.Include(u  => u.Threads)
+                                    .Include(u => u.UserThreadPoints)
+                                    .FirstOrDefault(u => u.Email == email);
                 if (user != null)
                 {
                     if (user.Password == crypto.Compute(password, user.PasswordSalt))

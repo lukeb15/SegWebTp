@@ -47,6 +47,7 @@ namespace HacForo.Controllers
 
                     using (var db = new Models.HacForoContainer())
                     {
+
                         string userJson = new JavaScriptSerializer().Serialize(UserMap.MapTo(user));
                         string encTicket = SessionManager.GetAuthTicket(user.UserName, userJson);
 

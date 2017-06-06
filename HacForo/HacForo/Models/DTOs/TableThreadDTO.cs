@@ -13,5 +13,6 @@ namespace HacForo.Models.DTOs
         public string Title { get; set; }
         public TableUserDTO User { get; set; }
         public string ImageLink { get; set; }
+        public int Points { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace HacForo.Models.DTOs
         public string Email { get; set; }
         public string ProfilePictureLink { get; set; }
         public IList<TableThreadDTO> Threads { get; set; }
+        public int Points { get; set; }
     }
 }

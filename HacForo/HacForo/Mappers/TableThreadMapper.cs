@@ -25,6 +25,7 @@ namespace HacForo.Mappers
             dto.CreationDate = dbModel.CreationDate.ToLongTimeString();
             dto.User = UserMap.MapTo(dbModel.User);
             dto.ImageLink = dbModel.ImageLink;
+            dto.Points = dbModel.UserThreadPoints.Sum(utp => utp.Points);
 
             return dto;
         }

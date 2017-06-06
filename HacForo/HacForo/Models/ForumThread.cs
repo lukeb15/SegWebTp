@@ -24,6 +24,8 @@ public partial class ForumThread
 
         this.Comments = new HashSet<Comment>();
 
+        this.UserThreadPoints = new HashSet<UserThreadPoints>();
+
     }
 
 
@@ -39,8 +41,6 @@ public partial class ForumThread
 
     public string ImageLink { get; set; }
 
-    public int Points { get; set; }
-
 
 
     public virtual User User { get; set; }
@@ -48,6 +48,10 @@ public partial class ForumThread
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Comment> Comments { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<UserThreadPoints> UserThreadPoints { get; set; }
 
 }
 

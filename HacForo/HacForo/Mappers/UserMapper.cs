@@ -24,6 +24,7 @@ namespace HacForo.Mappers
             dto.ProfilePictureLink = dbModel.ProfilePictureLink;
             dto.Threads = dbModel.Threads.ToList()
                             .Select(t => ThreadMap.MapTo(t)).ToList();
+            dto.Points = dto.Threads.Sum(utp => utp.Points);
 
             return dto;
         }

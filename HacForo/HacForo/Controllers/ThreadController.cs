@@ -47,6 +47,18 @@ namespace HacForo.Controllers
             {
                 return HttpNotFound();
             }
+
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);
+
+                threadDTO.CheckUserCanPoint(serializeModel.Id);
+            }
+
             return View(threadDTO);
         }
 
@@ -176,6 +188,66 @@ namespace HacForo.Controllers
                 }
             }
             throw new UnauthorizedAccessException("You must be logged to create threads");
+        }
+
+
+        [HttpGet]
+        public ActionResult Points(int points, int threadId)
+        {
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            ThreadDTO threadDTO = Mapper.MapTo(db.ForumThreadSet.Find(threadId));
+            
+            if (threadDTO == null)
+            {
+                ModelState.AddModelError("", "The Thread does not exist.");
+            }
+            if(1 > points || points > 10)
+            {
+                ModelState.AddModelError("", "The Points are invalid.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (authCookie != null)
+                {
+                    FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                    UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);
+
+                    if (serializeModel != null)
+                    {
+                        if (serializeModel.Id == threadDTO.User.Id)
+                        {
+                            ModelState.AddModelError("", "You can't add points to your own thread.");
+                        }
+                        if (db.UserThreadPointsSet.Where(utp => utp.UserId == serializeModel.Id && utp.ThreadId == threadId).Count() > 0)
+                        {
+                            ModelState.AddModelError("", "You have already pointed this thread");
+                        }
+
+                        if (ModelState.IsValid)
+                        {
+                            db.UserThreadPointsSet.Add(new UserThreadPoints
+                            {
+                                UserId = serializeModel.Id,
+                                Points = points,
+                                ThreadId = threadId
+                            });
+
+                            threadDTO.Points += points;
+
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    throw new UnauthorizedAccessException("You must be logged to create threads");
+                }
+            }
+
+            return View("Details", threadDTO);
         }
 
         protected override void Dispose(bool disposing)

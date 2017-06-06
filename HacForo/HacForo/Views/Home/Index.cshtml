@@ -13,6 +13,7 @@
             <tr>
                 <th></th>
                 <th>Title</th>
+                <th>Points</th>
                 <th>Started by</th>
                 <th>Created on</th>
             </tr>
@@ -24,6 +25,9 @@
                     <td><img class="listIcon" src="@item.ImageLink" /></td>
                     <td>
                         @Html.ActionLink((string)@item.Title, "Details", "Thread", new { id = item.Id }, null)
+                    </td>
+                    <td>
+                        @item.Points
                     </td>
                     <td>
                         @Html.ActionLink((string)@item.User.UserName, "Details", "User", new { id = @item.User.Id }, null)

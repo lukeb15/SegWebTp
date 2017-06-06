@@ -262,6 +262,7 @@
     </Compile>
     <Compile Include="Models\DTOs\LoginDTO.cs" />
     <Compile Include="Models\DTOs\RegistrationDTO.cs" />
+    <Compile Include="Models\DTOs\PointsDTO.cs" />
     <Compile Include="Models\DTOs\TableThreadDTO.cs" />
     <Compile Include="Models\DTOs\ThreadDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
@@ -289,6 +290,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Partial\User.cs" />
     <Compile Include="Models\User.cs">
+      <DependentUpon>HacForo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserThreadPoints.cs">
       <DependentUpon>HacForo.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

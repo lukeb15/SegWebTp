@@ -38,6 +38,8 @@ public partial class HacForoContainer : DbContext
 
     public virtual DbSet<Comment> CommentSet { get; set; }
 
+    public virtual DbSet<UserThreadPoints> UserThreadPointsSet { get; set; }
+
 }
 
 }
