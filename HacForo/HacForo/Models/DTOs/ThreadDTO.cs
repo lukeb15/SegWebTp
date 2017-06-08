@@ -13,10 +13,16 @@ namespace HacForo.Models.DTOs
         public string Title { get; set; }
         [AllowHtml]
         public string Description { get; set; }
-        public UserDTO User { get; set; }
+        public TableUserDTO User { get; set; }
         public string ImageLink { get; set; }
         public int Points { get; set; }
         public bool UserCanPoint { get; set; }
+        public IList<CommentDTO> Comments { get; set; }
+
+        public ThreadDTO()
+        {
+            Comments = new List<CommentDTO>();
+        }
 
         public bool CheckUserCanPoint(int userId)
         {

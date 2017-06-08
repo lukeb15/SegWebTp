@@ -40,7 +40,10 @@ public partial class HacForoContainer : DbContext
 
     public virtual DbSet<UserThreadPoints> UserThreadPointsSet { get; set; }
 
-}
+        public System.Data.Entity.DbSet<HacForo.Models.DTOs.CommentDTO> CommentDTOes { get; set; }
+
+        public System.Data.Entity.DbSet<HacForo.Models.DTOs.ThreadDTO> ThreadDTOes { get; set; }
+    }
 
 }
 

@@ -9,11 +9,13 @@ namespace HacForo.Mappers
 {
     public class ThreadMapper : IMapper<ForumThread, ThreadDTO>
     {
-        public IMapper<User, UserDTO> UserMap { get; private set; }
+        public IMapper<User, TableUserDTO> TableUserMap { get; private set; }
+        public IMapper<Comment, CommentDTO> CommentMap { get; private set; }
 
         public ThreadMapper() 
         {
-            UserMap = new UserMapper();
+            TableUserMap = new TableUserMapper();
+            CommentMap = new CommentMapper();
         }        
 
         public ThreadDTO MapTo(ForumThread dbModel)
@@ -23,11 +25,12 @@ namespace HacForo.Mappers
             dto.Id = dbModel.Id;
             dto.Title = dbModel.Title;
             dto.CreationDate = dbModel.CreationDate.ToLongTimeString();
-            dto.User = UserMap.MapTo(dbModel.User);
+            dto.User = TableUserMap.MapTo(dbModel.User);
             dto.Description = dbModel.Description;
             dto.ImageLink = dbModel.ImageLink;
             dto.Points = dbModel.UserThreadPoints.Sum(utp => utp.Points);
             dto.UserCanPoint = false;
+            dto.Comments = dbModel.Comments.Select(c => CommentMap.MapTo(c)).ToList();
 
             return dto;
         }

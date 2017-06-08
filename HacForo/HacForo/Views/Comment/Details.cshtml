@@ -1,0 +1,13 @@
+﻿@model HacForo.Models.DTOs.CommentDTO
+
+<div class="unFloat">
+    <div class="col-sm-10 col-sm-push-2">
+        <strong>@Html.DisplayFor(c => c.User.UserName)</strong>
+        <p>@Html.Raw(Model.Message)</p>
+    </div>
+    <div class="col-sm-pull-10 col-sm-2">
+        <img src="@Html.DisplayFor(model => model.User.ProfilePictureLink)" />       
+    </div>
+
+</div> 
+<hr />

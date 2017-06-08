@@ -17,12 +17,13 @@ namespace HacForo.Controllers
     public class UserController : Controller
     {
         private IMapper<User, RegistrationDTO> RegistrationMap { set; get; }
-        private IMapper<User, UserDTO> UserMap { set; get; }
-
+        private IMapper<User, UserDTO> Mapper { set; get; }
+        private IMapper<User, TableUserDTO> TableUserMap { set; get; }
         public UserController()
         {
             RegistrationMap = new RegistrationMapper();
-            UserMap = new UserMapper();
+            TableUserMap = new TableUserMapper();
+            Mapper = new UserMapper();
         }
 
         public ActionResult Index()
@@ -47,8 +48,7 @@ namespace HacForo.Controllers
 
                     using (var db = new Models.HacForoContainer())
                     {
-
-                        string userJson = new JavaScriptSerializer().Serialize(UserMap.MapTo(user));
+                        string userJson = new JavaScriptSerializer().Serialize(TableUserMap.MapTo(user));
                         string encTicket = SessionManager.GetAuthTicket(user.UserName, userJson);
 
                         HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
@@ -75,7 +75,7 @@ namespace HacForo.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                UserDTO userDTO = UserMap.MapTo(db.UserSet.Find(id));
+                UserDTO userDTO = Mapper.MapTo(db.UserSet.Find(id));
                 if (userDTO == null)
                 {
                     return HttpNotFound();
@@ -138,7 +138,7 @@ namespace HacForo.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                UserDTO userDTO = UserMap.MapTo(db.UserSet.Find(id));
+                UserDTO userDTO = Mapper.MapTo(db.UserSet.Find(id));
                 if (userDTO == null)
                 {
                     return HttpNotFound();
@@ -171,7 +171,7 @@ namespace HacForo.Controllers
                         registrationDTO.UpdateModel(userDb);
                         db.SaveChanges();
 
-                        return View("Details", UserMap.MapTo(userDb));
+                        return View("Details", Mapper.MapTo(userDb));
                     }
                     else
                     {
@@ -217,7 +217,7 @@ namespace HacForo.Controllers
                         userDb.SetPassword(newChangePassword.Password);
                         db.SaveChanges();
 
-                        return View("Details", UserMap.MapTo(userDb));
+                        return View("Details", Mapper.MapTo(userDb));
                     }
                 }
                 else

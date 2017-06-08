@@ -19,6 +19,7 @@ namespace HacForo.Controllers
         private HacForoContainer db = new HacForoContainer();
         private IMapper<ForumThread, ThreadDTO> Mapper { set; get; }
         private IMapper<ForumThread, TableThreadDTO> TableMapper { set; get; }
+        private IMapper<User, TableUserDTO> TableUserMap { set; get; }
 
         public ThreadController()
         {
@@ -173,7 +174,7 @@ namespace HacForo.Controllers
                     FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-                    UserDTO serializeModel = serializer.Deserialize<UserDTO>(authTicket.UserData);
+                    TableUserDTO serializeModel = serializer.Deserialize<TableUserDTO>(authTicket.UserData);
 
                     if (serializeModel != null)
                     {
@@ -192,7 +193,6 @@ namespace HacForo.Controllers
             }
             catch (Exception ex)
             {
-
                 throw;
             }
 

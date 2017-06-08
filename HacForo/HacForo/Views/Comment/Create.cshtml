@@ -1,0 +1,17 @@
+﻿@model HacForo.Models.DTOs.CommentDTO
+
+<div class="unFloat">
+    @using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { comment = Model }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                </div>
+                @Html.HiddenFor(x => x.ThreadId)
+            </div>
+            <input type="submit" value="Comment" />
+        </div>
+    }
+</div>

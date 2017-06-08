@@ -9,7 +9,7 @@ namespace HacForo.Models.DTOs
     public class CommentDTO
     {
         public int Id { get; set; }
-        public UserDTO User { get; set; }
+        public TableUserDTO User { get; set; }
         [AllowHtml]
         public string Message { get; set; }
         public string CreationDate { get; set; }

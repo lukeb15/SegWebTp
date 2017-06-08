@@ -9,9 +9,16 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <div class="col-sm-10">
-                    @Html.Raw(Model.Description)
-                    <hr />
+                <div class="well" style="padding-bottom: 40px">
+                    <div class="col-sm-10 unFloat" >
+                        @Html.Raw(Model.Description)
+                    </div>
+                    <div class="col-sm-2 unFloat">
+                        <img src="@Html.DisplayFor(model => model.ImageLink)" />
+                    </div>
+                </div>
+                <div class="well">
+                    <h3>@Html.DisplayFor(model => model.Points) Points</h3>
                     @if (Request.IsAuthenticated && Model.UserCanPoint)
                     {
                         <div>
@@ -28,17 +35,35 @@
                         </div>
                     }
                 </div>
-                <div class="col-sm-2">
-                    <img src="@Html.DisplayFor(model => model.ImageLink)" />
+                <div class="well">
+                    <div class="limitSpace">
+                        <h3>Comments</h3>
+                        <div class="unFloat">
+                            @foreach (var comment in Model.Comments)
+                            {
+                                @Html.Partial("~/Views/Comment/Details.cshtml", comment)
+                            }
+                        </div>
+                        <div class="unFloat">
+                            @if (Request.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+                                {
+                                    @Html.Partial("~/Views/Comment/Create.cshtml", new HacForo.Models.DTOs.CommentDTO() { ThreadId = Model.Id })
+                                }
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 well">
+                <img src="@Html.DisplayFor(model => model.User.ProfilePictureLink)" />
                 <dl class="dl-horizontal">
                     <dt>
-                        @Html.DisplayNameFor(model => Model.User.UserName)
+                        @Html.DisplayNameFor(model => model.User.UserName)
                     </dt>
                     <dd>
-                        @Html.ActionLink((string)Model.User.UserName, "Details", "User", new { id = Model.User.Id }, null)                        
+                        @Html.ActionLink((string)Model.User.UserName, "Details", "User", new { id = Model.User.Id }, null)
                     </dd>
                     <dt>
                         @Html.DisplayNameFor(model => model.CreationDate)
@@ -49,15 +74,13 @@
                     <dt>
                         @Html.DisplayNameFor(model => model.Points)
                     </dt>
-                    <dd>
-                        <strong>@Html.DisplayFor(model => model.Points)</strong>
-                    </dd>
                 </dl>
             </div>
         </div>
     </div>
 </div>
 <br />
+
 <p>
     @if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.User.Id)
     {
@@ -66,3 +89,20 @@
     }
     @Html.ActionLink("Back to List", "Index", "Home", null, null)
 </p>
+
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<!-- Script to wire up your TinyMCE editor -->
+<script type="text/javascript">
+    // Initialize your tinyMCE Editor with your preferred options
+    tinymce.init({
+        selector: 'textarea',
+        height: 100,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table contextmenu paste code'
+        ],
+        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+    });
+</script>

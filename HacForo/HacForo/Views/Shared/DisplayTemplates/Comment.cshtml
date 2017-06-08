@@ -1,0 +1,12 @@
+﻿@model HacForo.Models.DTOs.CommentDTO
+<div>
+    <div class="editor-field col-sm-8" >
+        @Html.Raw(Model.Message)
+    </div>
+    <div class="editor-field col-sm-2">
+        <img src="@Html.DisplayFor(model => model.User.ProfilePictureLink)" class="listIcon" />
+        @Html.DisplayFor(c => c.User.UserName)
+    </div>
+</div> 
+<hr />
+<br />

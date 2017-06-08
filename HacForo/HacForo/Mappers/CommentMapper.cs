@@ -9,13 +9,11 @@ namespace HacForo.Mappers
 {
     public class CommentMapper : IMapper<Comment, CommentDTO>
     {
-        public IMapper<User, UserDTO> UserMap { get; private set; }
-        public IMapper<ForumThread, ThreadDTO> ThreadMap { get; private set; }
+        public IMapper<User, TableUserDTO> UserMap { get; private set; }
 
         public CommentMapper()
         {
-            UserMap = new UserMapper();
-            ThreadMap = new ThreadMapper();
+            UserMap = new TableUserMapper();
         }
 
         public CommentDTO MapTo(Comment dbModel)
@@ -34,12 +32,8 @@ namespace HacForo.Mappers
         {
             Comment dbModel = new Comment();
             dbModel.ThreadId = dto.ThreadId;
-            using (var db = new Models.HacForoContainer())
-            {
-                dbModel.Thread = db.ForumThreadSet.Find(dto.ThreadId);
-            }
             dbModel.Message = dto.Message;
-            dbModel.User = UserMap.MapTo(dto.User);
+            dbModel.UserId = dto.User.Id;
             dbModel.CreationDate = DateTime.Now;
 
             return dbModel;
