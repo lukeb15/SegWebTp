@@ -8,10 +8,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body style="padding:25px;">
-    <div style="width:auto;" class="text-right">        
+    <div style="width:auto;" class="text-right"> 
+        @Html.ActionLink("Home", "Index", "Home", null, null) <span> | </span>     
         @if (Request.IsAuthenticated)
         {
             <strong>@Html.ActionLink((string)(User as HacForo.Common.MyPrincipal).User.UserName, "Details", "User", new { id = (User as HacForo.Common.MyPrincipal).User.Id }, null)</strong>
+            <span> | </span>
             @Html.ActionLink("Log Out", "Logout", "User")
         }
         else

@@ -14,7 +14,7 @@
                         @Html.Raw(Model.Description)
                     </div>
                     <div class="col-sm-2 unFloat">
-                        <img src="@Html.DisplayFor(model => model.ImageLink)" />
+                        <img src="@Html.DisplayFor(model => model.ImageLink)"  class="listIcon"/>
                     </div>
                 </div>
                 <div class="well">
@@ -81,10 +81,9 @@
 <p>
     @if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.User.Id)
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
         <span>|</span>
     }
-    @Html.ActionLink("Back to List", "Index", "Home", null, null)
 </p>
 
 <script src="~/scripts/tinymce/tinymce.min.js"></script>

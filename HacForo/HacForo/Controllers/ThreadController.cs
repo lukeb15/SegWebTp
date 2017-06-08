@@ -114,6 +114,20 @@ namespace HacForo.Controllers
 
             ForumThread threadDb = db.ForumThreadSet.Find(id.Value);
 
+            while(threadDb.UserThreadPoints.Count > 0)
+            {
+                var utp =threadDb.UserThreadPoints.First();
+                threadDb.UserThreadPoints.Remove(utp);
+                db.Entry(utp).State = EntityState.Deleted;
+            }
+
+            while (threadDb.Comments.Count > 0)
+            {
+                var c = threadDb.Comments.First();
+                threadDb.Comments.Remove(c);
+                db.Entry(c).State = EntityState.Deleted;
+            }
+
             if (threadDb != null)
                 db.ForumThreadSet.Attach(threadDb);
             else
