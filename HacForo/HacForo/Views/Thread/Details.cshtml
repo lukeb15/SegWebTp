@@ -82,7 +82,6 @@
     @if (Request.IsAuthenticated && (User as HacForo.Common.MyPrincipal).User.Id == Model.User.Id)
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
-        <span>|</span>
     }
 </p>
 
