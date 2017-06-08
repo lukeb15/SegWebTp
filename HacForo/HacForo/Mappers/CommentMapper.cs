@@ -23,7 +23,7 @@ namespace HacForo.Mappers
             dto.Message = dbModel.Message;
             dto.User = UserMap.MapTo(dbModel.User);
             dto.ThreadId = dbModel.ThreadId;
-            dto.CreationDate = dbModel.CreationDate.ToLongTimeString();
+            dto.CreationDate = dbModel.CreationDate.ToLongDateString();
 
             return dto;
         }

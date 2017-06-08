@@ -24,7 +24,7 @@ namespace HacForo.Mappers
 
             dto.Id = dbModel.Id;
             dto.Title = dbModel.Title;
-            dto.CreationDate = dbModel.CreationDate.ToLongTimeString();
+            dto.CreationDate = dbModel.CreationDate.ToLongDateString();
             dto.User = TableUserMap.MapTo(dbModel.User);
             dto.Description = dbModel.Description;
             dto.ImageLink = dbModel.ImageLink;

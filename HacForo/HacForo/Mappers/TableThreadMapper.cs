@@ -22,7 +22,7 @@ namespace HacForo.Mappers
 
             dto.Id = dbModel.Id;
             dto.Title = dbModel.Title;
-            dto.CreationDate = dbModel.CreationDate.ToLongTimeString();
+            dto.CreationDate = dbModel.CreationDate.ToLongDateString();
             dto.User = UserMap.MapTo(dbModel.User);
             dto.ImageLink = dbModel.ImageLink;
             dto.Points = dbModel.UserThreadPoints.Sum(utp => utp.Points);

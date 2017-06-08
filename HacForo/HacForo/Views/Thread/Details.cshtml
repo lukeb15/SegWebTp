@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <div class="well" style="padding-bottom: 40px">
+                <div class="well unFloat" style="padding-bottom: 40px">
                     <div class="col-sm-10 unFloat" >
                         @Html.Raw(Model.Description)
                     </div>
@@ -71,9 +71,6 @@
                     <dd>
                         @Html.DisplayFor(model => model.CreationDate)
                     </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Points)
-                    </dt>
                 </dl>
             </div>
         </div>
