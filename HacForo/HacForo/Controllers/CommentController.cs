@@ -129,15 +129,6 @@ namespace HacForo.Controllers
             }
 
             throw new UnauthorizedAccessException("You must be logged to create threads");
-
-            if (ModelState.IsValid)
-            {
-                db.CommentSet.Add(Mapper.MapTo(comment));
-                db.SaveChanges();
-                return View();
-            }
-
-            return View("Details", "Thread", ThreadMap.MapTo(db.ForumThreadSet.Find(comment.ThreadId)));
         }
 
         protected override void Dispose(bool disposing)
