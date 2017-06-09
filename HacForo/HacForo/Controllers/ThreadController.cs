@@ -270,7 +270,7 @@ namespace HacForo.Controllers
                 }
             }
 
-            return View("Details", threadDTO);
+            return RedirectToAction("Details", new { id = threadDTO.Id });
         }
 
         protected override void Dispose(bool disposing)

@@ -268,4 +268,3 @@ C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\Microsoft.Owin.Security
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\bin\System.Web.Http.Owin.xml
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.dll
 C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.pdb
-C:\Users\Lucas\Source\Repos\SegWebTp\HacForo\HacForo\obj\Debug\HacForo.csprojResolveAssemblyReference.cache

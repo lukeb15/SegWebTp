@@ -114,11 +114,7 @@ namespace HacForo.Controllers
                             db.CommentSet.Add(Mapper.MapTo(comment));
                             db.SaveChanges();
 
-                            return RedirectToAction("Details", "Thread", ThreadMap.MapTo(
-                                    db.ForumThreadSet
-                                          .Include(t => t.Comments.Select(c => c.User))
-                                        .FirstOrDefault(t => t.Id == comment.ThreadId)
-                                    ));
+                            return RedirectToAction("Details", "Thread", new { id = comment.ThreadId });
                         }
                     }
                 }
